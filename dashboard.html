@@ -297,3 +297,10 @@
     </script>
 </body>
 </html>
+// Get name from localStorage or prompt
+let userName = localStorage.getItem('userName');
+if (!userName || userName === 'Guest') {
+    userName = prompt('Enter your name:') || 'Guest';
+    localStorage.setItem('userName', userName);
+}
+document.getElementById('displayName').innerText = userName;
