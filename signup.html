@@ -88,12 +88,12 @@
             <form id="signupForm" onsubmit="handleSignup(event)">
                 <div class="input-group">
                     <label>Full Name</label>
-                    <input type="text" id="name" required placeholder="John Doe">
+                    <input type="text" id="name" required placeholder="Enter your full name">
                 </div>
                 
                 <div class="input-group">
                     <label>Email</label>
-                    <input type="email" id="email" required placeholder="john@example.com">
+                    <input type="email" id="email" required placeholder="your@email.com">
                 </div>
 
                 <div class="input-group password-container">
@@ -116,7 +116,6 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
     <script>
         function toggleVisibility() {
             const pwd = document.getElementById('password');
@@ -146,23 +145,22 @@
 
         function handleSignup(e) {
             e.preventDefault();
+            const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
             const alertBox = document.getElementById('alert-box');
             
-            // Mock Duplicate Email Protection
-            if(email === 'test@carbonnova.com') {
-                alertBox.className = 'alert-error';
-                alertBox.innerText = 'Email already exists! Please login.';
-                alertBox.style.display = 'block';
-            } else {
-                alertBox.className = 'alert-success';
-                alertBox.innerText = 'Account created successfully! Redirecting...';
-                alertBox.style.display = 'block';
-                setTimeout(() => {
-                    window.location.href = 'dashboard.html';
-                }, 1500);
-            }
+            // Save user name to localStorage
+            localStorage.setItem('userName', name);
+            localStorage.setItem('userEmail', email);
+            
+            alertBox.className = 'alert-success';
+            alertBox.innerText = 'Account created successfully! Redirecting...';
+            alertBox.style.display = 'block';
+            setTimeout(() => {
+                window.location.href = 'dashboard.html';
+            }, 1500);
         }
     </script>
 </body>
 </html>
+    
