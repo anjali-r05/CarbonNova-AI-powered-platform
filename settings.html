@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarbonNova - Settings</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .settings-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+        .settings-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+        }
+        .setting-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .setting-row:last-child {
+            border-bottom: none;
+        }
+        .setting-info h4 {
+            margin-bottom: 5px;
+        }
+        .setting-info p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #333;
+            transition: .4s;
+            border-radius: 24px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px; width: 18px;
+            left: 3px; bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: var(--primary-green);
+        }
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        .color-selector {
+            display: flex;
+            gap: 10px;
+        }
+        .color-dot {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        .color-dot.active {
+            border-color: white;
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-wave"></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo-container">
+            <i class="fas fa-leaf logo-icon"></i> CarbonNova
+        </div>
+        <ul class="nav-links">
+            <li><a href="dashboard.html"><i class="fas fa-home"></i> Overview</a></li>
+            <li><a href="analytics.html"><i class="fas fa-tachometer-alt"></i> Carbon Score</a></li>
+            <li><a href="ai-assistant.html"><i class="fas fa-brain"></i> AI Assistant</a></li>
+            <li><a href="dashboard.html"><i class="fas fa-tasks"></i> Missions</a></li>
+            <li><a href="games.html"><i class="fas fa-gamepad"></i> Games</a></li>
+            <li><a href="dashboard.html"><i class="fas fa-gift"></i> Rewards</a></li>
+            <li><a href="forest.html"><i class="fas fa-tree"></i> Forest</a></li>
+            <li><a href="certificates.html"><i class="fas fa-award"></i> Certificates</a></li>
+            <li><a href="analytics.html"><i class="fas fa-chart-pie"></i> Analytics</a></li>
+            <li><a href="community.html"><i class="fas fa-users"></i> Community</a></li>
+            <li class="active"><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        <nav class="top-nav">
+            <h1><i class="fas fa-cog text-muted mr-1"></i> User Settings</h1>
+            <div class="user-profile">
+                <button class="btn btn-outline" style="padding: 8px 20px;" onclick="window.location.href='index.html'"><i class="fas fa-sign-out-alt mr-1"></i> Logout</button>
+            </div>
+        </nav>
+
+        <div class="settings-container">
+            <!-- Profile Settings -->
+            <div class="settings-section reveal active">
+                <h3 class="mb-2"><i class="fas fa-user-circle text-cyan mr-1"></i> Profile Settings</h3>
+                <div class="grid-2">
+                    <div class="input-group">
+                        <label>Full Name</label>
+                        <input type="text" value="John Doe">
+                    </div>
+                    <div class="input-group">
+                        <label>Email Address</label>
+                        <input type="email" value="john.doe@example.com">
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>City / Location</label>
+                    <input type="text" value="San Francisco, CA">
+                </div>
+                <button class="btn btn-primary">Save Profile Changes</button>
+            </div>
+
+            <!-- Theme Settings -->
+            <div class="settings-section reveal active">
+                <h3 class="mb-2"><i class="fas fa-palette text-gold mr-1"></i> Appearance</h3>
+                <div class="setting-row">
+                    <div class="setting-info">
+                        <h4>Dark Mode</h4>
+                        <p>Use a dark theme for the entire interface.</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="setting-row">
+                    <div class="setting-info">
+                        <h4>Accent Color</h4>
+                        <p>Change the primary highlight color.</p>
+                    </div>
+                    <div class="color-selector">
+                        <div class="color-dot active" style="background: #00ff88;"></div>
+                        <div class="color-dot" style="background: #00e5ff;"></div>
+                        <div class="color-dot" style="background: #9d4edd;"></div>
+                        <div class="color-dot" style="background: #ffd700;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notifications -->
+            <div class="settings-section reveal active">
+                <h3 class="mb-2"><i class="fas fa-bell text-purple mr-1"></i> Notifications</h3>
+                <div class="setting-row">
+                    <div class="setting-info">
+                        <h4>Daily Mission Reminders</h4>
+                        <p>Get notified when new missions are available.</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="setting-row">
+                    <div class="setting-info">
+                        <h4>Weekly Impact Reports</h4>
+                        <p>Receive a summary of your carbon reduction stats.</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Privacy -->
+            <div class="settings-section reveal active">
+                <h3 class="mb-2"><i class="fas fa-shield-alt text-green mr-1"></i> Privacy & Data</h3>
+                <div class="setting-row">
+                    <div class="setting-info">
+                        <h4>Public Profile</h4>
+                        <p>Allow other community members to see your stats.</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="setting-row">
+                    <div class="setting-info">
+                        <h4>Data Management</h4>
+                        <p>Export your activity history or reset your progress.</p>
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="btn btn-outline" style="padding: 5px 15px; font-size: 0.8rem;">Export Data</button>
+                        <button class="btn btn-outline" style="padding: 5px 15px; font-size: 0.8rem; border-color: #ff5555; color: #ff5555;">Reset Progress</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+        // Simple color selector logic
+        document.querySelectorAll('.color-dot').forEach(dot => {
+            dot.addEventListener('click', function() {
+                document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

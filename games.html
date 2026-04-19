@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarbonNova - Eco Game Arena</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .game-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            cursor: pointer;
+            height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 20px;
+            border: 1px solid var(--glass-border);
+        }
+        
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-size: cover;
+            background-position: center;
+            z-index: 0;
+            transition: transform 0.5s;
+            opacity: 0.6;
+        }
+
+        .game-card:hover::before { transform: scale(1.1); }
+
+        .game-card::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            z-index: 1;
+        }
+
+        .game-content { position: relative; z-index: 2; }
+
+        .game-badge {
+            position: absolute;
+            top: 20px; right: 20px;
+            background: rgba(0,0,0,0.7);
+            padding: 5px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            z-index: 2;
+            border: 1px solid var(--primary-green);
+            color: var(--primary-green);
+        }
+
+        /* Overlay */
+        .game-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.95);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        .game-overlay.active { display: flex; }
+
+        .game-container {
+            width: 90%;
+            max-width: 800px;
+            background: #0a1118;
+            border: 2px solid var(--primary-green);
+            border-radius: 24px;
+            padding: 40px;
+            position: relative;
+            box-shadow: 0 0 50px var(--primary-green-glow);
+        }
+
+        .close-game {
+            position: absolute;
+            top: 25px; right: 25px;
+            font-size: 2rem;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .close-game:hover { transform: rotate(90deg); color: #ff4d4d; }
+
+        .game-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-family: var(--font-accent);
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-wave"></div>
+
+    <aside class="sidebar">
+        <div class="logo-container">
+            <i class="fas fa-leaf logo-icon"></i> CarbonNova
+        </div>
+        <ul class="nav-links">
+            <li><a href="dashboard.html"><i class="fas fa-home"></i> Overview</a></li>
+            <li><a href="analytics.html"><i class="fas fa-tachometer-alt"></i> Carbon Score</a></li>
+            <li><a href="ai-assistant.html"><i class="fas fa-brain"></i> AI Assistant</a></li>
+            <li><a href="dashboard.html"><i class="fas fa-tasks"></i> Missions</a></li>
+            <li class="active"><a href="games.html"><i class="fas fa-gamepad"></i> Games</a></li>
+            <li><a href="dashboard.html"><i class="fas fa-gift"></i> Rewards</a></li>
+            <li><a href="forest.html"><i class="fas fa-tree"></i> Forest</a></li>
+            <li><a href="certificates.html"><i class="fas fa-award"></i> Certificates</a></li>
+            <li><a href="analytics.html"><i class="fas fa-chart-pie"></i> Analytics</a></li>
+            <li><a href="community.html"><i class="fas fa-users"></i> Community</a></li>
+            <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        <div style="padding: 30px;">
+            <div class="flex-between mb-2">
+                <h1><i class="fas fa-gamepad text-green"></i> Eco Game Arena</h1>
+                <div class="badge badge-purple" style="font-size: 1rem;"><i class="fas fa-coins text-gold"></i> <span id="userCoins">1,250</span> Coins</div>
+            </div>
+            
+            <div class="grid-2">
+                <!-- Waste Sorting Hero -->
+                <div class="game-card reveal active" style="--bg-url: url('https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=800&q=80');" onclick="launchGame('sorting')">
+                    <div class="game-badge">Earn 500 XP</div>
+                    <div class="game-content">
+                        <h3>Waste Sorting Hero</h3>
+                        <p class="text-muted">Drag items into Recycle, Organic, or Landfill bins.</p>
+                        <button class="btn btn-primary mt-1">Play Now</button>
+                    </div>
+                </div>
+
+                <!-- Save Water Challenge -->
+                <div class="game-card reveal active" style="--bg-url: url('https://images.unsplash.com/photo-1527668752968-14ce70a492e8?auto=format&fit=crop&w=800&q=80');" onclick="launchGame('water')">
+                    <div class="game-badge">Earn 1000 XP</div>
+                    <div class="game-content">
+                        <h3>Save Water Challenge</h3>
+                        <p class="text-muted">Tap leaking pipes quickly to save every drop.</p>
+                        <button class="btn btn-primary mt-1">Stop Leaks</button>
+                    </div>
+                </div>
+
+                <!-- Climate Quiz Arena -->
+                <div class="game-card reveal active" style="--bg-url: url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=800&q=80');" onclick="launchGame('quiz')">
+                    <div class="game-badge">Earn Rewards</div>
+                    <div class="game-content">
+                        <h3>Climate Quiz Arena</h3>
+                        <p class="text-muted">Test your eco-knowledge in this high-speed battle.</p>
+                        <button class="btn btn-primary mt-1">Enter Arena</button>
+                    </div>
+                </div>
+
+                <!-- Tree Tap Growth -->
+                <div class="game-card reveal active" style="--bg-url: url('https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?auto=format&fit=crop&w=800&q=80');" onclick="launchGame('tree')">
+                    <div class="game-badge">Tap to Grow</div>
+                    <div class="game-content">
+                        <h3>Tree Tap Growth</h3>
+                        <p class="text-muted">Rapidly tap to grow a massive forest giant.</p>
+                        <button class="btn btn-primary mt-1">Start Tapping</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Game Overlay -->
+    <div class="game-overlay" id="gameOverlay">
+        <div class="game-container">
+            <i class="fas fa-times close-game" onclick="quitGame()"></i>
+            
+            <div id="gameScreen">
+                <!-- Content dynamically loaded -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        let gameState = {
+            score: 0,
+            timer: 0,
+            active: false,
+            interval: null,
+            coins: 1250
+        };
+
+        function launchGame(type) {
+            const overlay = document.getElementById('gameOverlay');
+            const screen = document.getElementById('gameScreen');
+            overlay.classList.add('active');
+            gameState.active = true;
+            gameState.score = 0;
+
+            if (type === 'sorting') setupSortingGame(screen);
+            if (type === 'water') setupWaterGame(screen);
+            if (type === 'quiz') setupQuizGame(screen);
+            if (type === 'tree') setupTreeGame(screen);
+        }
+
+        function quitGame() {
+            clearInterval(gameState.interval);
+            gameState.active = false;
+            document.getElementById('gameOverlay').classList.remove('active');
+            document.getElementById('gameScreen').innerHTML = '';
+        }
+
+        /* --- WASTE SORTING HERO --- */
+        function setupSortingGame(screen) {
+            screen.innerHTML = `
+                <div class="game-stats">
+                    <h2>Waste Sorting Hero</h2>
+                    <div>Score: <span id="gameScore" class="text-green">0</span> | Time: <span id="gameTime">30</span>s</div>
+                </div>
+                <div class="game-viewport" id="sortingArea">
+                    <div class="bin-container">
+                        <div class="bin" id="bin-organic">
+                            <i class="fas fa-apple-alt" style="color:#8b4513"></i>
+                            <span>ORGANIC</span>
+                        </div>
+                        <div class="bin" id="bin-recycle">
+                            <i class="fas fa-recycle" style="color:var(--primary-green)"></i>
+                            <span>RECYCLE</span>
+                        </div>
+                        <div class="bin" id="bin-landfill">
+                            <i class="fas fa-trash-alt" style="color:#666"></i>
+                            <span>LANDFILL</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            let timeLeft = 30;
+            const items = [
+                { icon: '🍎', type: 'organic' }, { icon: '🍌', type: 'organic' },
+                { icon: '🧴', type: 'recycle' }, { icon: '🥤', type: 'recycle' },
+                { icon: '📦', type: 'recycle' }, { icon: '🗞️', type: 'recycle' },
+                { icon: '🚬', type: 'landfill' }, { icon: '🦴', type: 'landfill' }
+            ];
+
+            gameState.interval = setInterval(() => {
+                if (--timeLeft <= 0) endGame('Waste Sorting');
+                document.getElementById('gameTime').innerText = timeLeft;
+                if (Math.random() > 0.6) spawnItem();
+            }, 1000);
+
+            function spawnItem() {
+                const item = items[Math.floor(Math.random() * items.length)];
+                const div = document.createElement('div');
+                div.className = 'falling-item';
+                div.innerHTML = item.icon;
+                div.style.left = Math.random() * 80 + 10 + '%';
+                div.style.top = '-50px';
+                document.getElementById('sortingArea').appendChild(div);
+
+                let top = -50;
+                const fall = setInterval(() => {
+                    top += 3;
+                    div.style.top = top + 'px';
+                    if (top > 300) {
+                        checkCollision(div, item.type, fall);
+                    }
+                    if (top > 400) {
+                        clearInterval(fall);
+                        div.remove();
+                    }
+                }, 20);
+
+                div.onclick = () => {
+                    gameState.score += 50;
+                    document.getElementById('gameScore').innerText = gameState.score;
+                    createConfetti(div.offsetLeft, div.offsetTop);
+                    clearInterval(fall);
+                    div.remove();
+                };
+            }
+
+            function checkCollision(div, correctType, interval) {
+                // Simplified collision: if it gets to the bottom and you didn't click, it falls through
+            }
+        }
+
+        /* --- SAVE WATER CHALLENGE --- */
+        function setupWaterGame(screen) {
+            screen.innerHTML = `
+                <div class="game-stats">
+                    <h2>Save Water Challenge</h2>
+                    <div>Saved: <span id="gameScore" class="text-cyan">0</span>L | Time: <span id="gameTime">30</span>s</div>
+                </div>
+                <div class="game-viewport" id="waterArea"></div>
+            `;
+
+            let timeLeft = 30;
+            gameState.interval = setInterval(() => {
+                if (--timeLeft <= 0) endGame('Water Saving');
+                document.getElementById('gameTime').innerText = timeLeft;
+                if (Math.random() > 0.4) spawnLeak();
+            }, 1000);
+
+            function spawnLeak() {
+                const tap = document.createElement('div');
+                tap.className = 'pipe-tap leaking';
+                tap.innerHTML = '<i class="fas fa-faucet"></i>';
+                tap.style.left = Math.random() * 80 + 10 + '%';
+                tap.style.top = Math.random() * 60 + 20 + '%';
+                document.getElementById('waterArea').appendChild(tap);
+
+                tap.onclick = () => {
+                    gameState.score += 10;
+                    document.getElementById('gameScore').innerText = gameState.score;
+                    tap.classList.remove('leaking');
+                    tap.style.color = 'var(--primary-green)';
+                    createConfetti(tap.offsetLeft, tap.offsetTop);
+                    setTimeout(() => tap.remove(), 500);
+                };
+            }
+        }
+
+        /* --- CLIMATE QUIZ ARENA --- */
+        function setupQuizGame(screen) {
+            const questions = [
+                { q: "Which transport emits least CO2?", a: ["Private Jet", "Electric Car", "Bicycle", "Diesel Bus"], c: 2 },
+                { q: "Why is recycling plastic important?", a: ["To make more trash", "To save energy", "Because it looks cool", "To fill oceans"], c: 1 },
+                { q: "What is a major source of methane?", a: ["Volcanoes", "Solar Panels", "Livestock Farming", "Glaciers"], c: 2 },
+                { q: "What is 'Net Zero'?", a: ["No money", "Carbon balance", "Zero trees", "Empty ocean"], c: 1 }
+            ];
+            let currentQ = 0;
+
+            function renderQuestion() {
+                const q = questions[currentQ];
+                screen.innerHTML = `
+                    <div class="game-stats">
+                        <h2>Climate Quiz Arena</h2>
+                        <div>Question ${currentQ + 1}/${questions.length} | Score: <span id="gameScore">${gameState.score}</span></div>
+                    </div>
+                    <div class="glass-card" style="margin-top:20px;">
+                        <h3 class="mb-2" style="font-size:1.5rem;">${q.q}</h3>
+                        <div class="quiz-options">
+                            ${q.a.map((opt, i) => `<button class="quiz-btn" onclick="checkAnswer(${i})">${opt}</button>`).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            window.checkAnswer = (idx) => {
+                const btns = document.querySelectorAll('.quiz-btn');
+                if (idx === questions[currentQ].c) {
+                    btns[idx].classList.add('correct');
+                    gameState.score += 100;
+                    createConfetti(400, 200);
+                } else {
+                    btns[idx].classList.add('wrong');
+                    btns[questions[currentQ].c].classList.add('correct');
+                }
+                
+                setTimeout(() => {
+                    currentQ++;
+                    if (currentQ < questions.length) renderQuestion();
+                    else endGame('Climate Quiz');
+                }, 1500);
+            };
+
+            renderQuestion();
+        }
+
+        /* --- TREE TAP GROWTH --- */
+        function setupTreeGame(screen) {
+            screen.innerHTML = `
+                <div class="game-stats">
+                    <h2>Tree Tap Growth</h2>
+                    <div>Taps: <span id="gameScore">0</span> | Time: <span id="gameTime">15</span>s</div>
+                </div>
+                <div class="game-viewport flex-center" id="treeArea">
+                    <div class="tree-stage" id="mainTree" style="cursor:pointer">🌱</div>
+                </div>
+                <p class="text-center text-muted">RAPIDLY TAP THE TREE TO GROW!</p>
+            `;
+
+            let timeLeft = 15;
+            const tree = document.getElementById('mainTree');
+            
+            tree.onclick = () => {
+                if (!gameState.active) return;
+                gameState.score++;
+                document.getElementById('gameScore').innerText = gameState.score;
+                tree.classList.add('tree-grow-anim');
+                setTimeout(() => tree.classList.remove('tree-grow-anim'), 100);
+
+                if (gameState.score > 20) tree.innerText = '🌿';
+                if (gameState.score > 50) tree.innerText = '🌳';
+                if (gameState.score > 80) tree.innerText = '🌲';
+                if (gameState.score > 120) tree.innerText = '🌴';
+                
+                if (gameState.score % 10 === 0) createConfetti(400, 200);
+            };
+
+            gameState.interval = setInterval(() => {
+                if (--timeLeft <= 0) endGame('Tree Growth');
+                document.getElementById('gameTime').innerText = timeLeft;
+            }, 1000);
+        }
+
+        function endGame(name) {
+            clearInterval(gameState.interval);
+            gameState.active = false;
+            
+            const earnedCoins = Math.floor(gameState.score / 2);
+            const earnedXP = gameState.score * 2;
+            
+            alert(`GAME OVER: ${name}\nFinal Score: ${gameState.score}\nRewards: +${earnedCoins} Coins, +${earnedXP} XP!`);
+            
+            quitGame();
+        }
+
+        function createConfetti(x, y) {
+            for (let i = 0; i < 20; i++) {
+                const conf = document.createElement('div');
+                conf.className = 'confetti';
+                conf.style.left = x + 'px';
+                conf.style.top = y + 'px';
+                conf.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                conf.style.width = Math.random() * 10 + 5 + 'px';
+                conf.style.height = conf.style.width;
+                document.body.appendChild(conf);
+                setTimeout(() => conf.remove(), 3000);
+            }
+        }
+    </script>
+</body>
+</html>

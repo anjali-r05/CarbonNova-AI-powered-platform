@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarbonNova - Forest Mode</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .forest-container {
+            position: relative;
+            height: calc(100vh - 40px);
+            background: linear-gradient(to bottom, #0a192f 0%, #020c1b 100%);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--primary-green);
+            box-shadow: 0 0 50px rgba(0,255,136,0.1);
+        }
+
+        .forest-stats {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+            background: rgba(0,0,0,0.5);
+            padding: 15px 25px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+        }
+
+        .forest-controls {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 10;
+            display: flex;
+            gap: 10px;
+        }
+
+        .control-btn {
+            background: rgba(0,0,0,0.5);
+            border: 1px solid var(--glass-border);
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .control-btn:hover, .control-btn.active {
+            background: var(--primary-green);
+            color: #000;
+            box-shadow: 0 0 15px var(--primary-green-glow);
+        }
+
+        .ground {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 150px;
+            background: linear-gradient(to top, #0d2b1f, transparent);
+            z-index: 2;
+        }
+
+        .tree {
+            position: absolute;
+            bottom: 50px;
+            transform-origin: bottom center;
+            transition: all 1s ease-in-out;
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .tree-crown {
+            background: radial-gradient(circle at 30% 30%, var(--primary-green), #004d26);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            box-shadow: inset -10px -10px 20px rgba(0,0,0,0.5), 0 0 15px rgba(0,255,136,0.3);
+            transition: all 1s;
+        }
+
+        .tree-trunk {
+            background: linear-gradient(to right, #4a2f1d, #6b442a);
+            border-radius: 2px;
+            transition: all 1s;
+        }
+
+        /* Rain Animation */
+        .rain {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+            display: none;
+        }
+
+        .rain.active {
+            display: block;
+        }
+
+        .drop {
+            position: absolute;
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(0, 229, 255, 0.8));
+            width: 2px;
+            height: 20px;
+            bottom: 100%;
+            animation: rainDrop linear infinite;
+        }
+
+        @keyframes rainDrop {
+            0% { transform: translateY(-100vh); }
+            100% { transform: translateY(100vh); }
+        }
+
+        /* Birds */
+        .bird {
+            position: absolute;
+            top: 20%;
+            color: #fff;
+            font-size: 1.5rem;
+            animation: fly linear infinite;
+            opacity: 0.5;
+        }
+
+        @keyframes fly {
+            0% { transform: translateX(-100px) translateY(0) scaleX(-1); }
+            50% { transform: translateX(50vw) translateY(-50px) scaleX(-1); }
+            100% { transform: translateX(100vw) translateY(0) scaleX(-1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-wave"></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo-container">
+            <i class="fas fa-leaf logo-icon"></i> CarbonNova
+        </div>
+        <ul class="nav-links">
+            <li><a href="dashboard.html"><i class="fas fa-home"></i> Overview</a></li>
+            <li><a href="analytics.html"><i class="fas fa-tachometer-alt"></i> Carbon Score</a></li>
+            <li><a href="ai-assistant.html"><i class="fas fa-brain"></i> AI Assistant</a></li>
+            <li><a href="dashboard.html"><i class="fas fa-tasks"></i> Missions</a></li>
+            <li><a href="games.html"><i class="fas fa-gamepad"></i> Games</a></li>
+            <li><a href="dashboard.html"><i class="fas fa-gift"></i> Rewards</a></li>
+            <li class="active"><a href="forest.html"><i class="fas fa-tree"></i> Forest</a></li>
+            <li><a href="certificates.html"><i class="fas fa-award"></i> Certificates</a></li>
+            <li><a href="analytics.html"><i class="fas fa-chart-pie"></i> Analytics</a></li>
+            <li><a href="community.html"><i class="fas fa-users"></i> Community</a></li>
+            <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        <div style="padding: 20px;">
+            <div class="forest-container" id="forestBox">
+                <div class="forest-stats">
+                    <h2 class="text-green">Personal Forest</h2>
+                    <p class="text-muted"><i class="fas fa-tree"></i> 12 Trees Grown</p>
+                    <p class="text-muted"><i class="fas fa-leaf"></i> 4,500 Forest Score</p>
+                </div>
+
+                <div class="forest-controls">
+                    <button class="control-btn" onclick="plantTree()" title="Plant Seed">
+                        <i class="fas fa-seedling"></i>
+                    </button>
+                    <button class="control-btn" onclick="toggleRain()" id="rainBtn" title="Water Forest">
+                        <i class="fas fa-cloud-rain"></i>
+                    </button>
+                    <button class="control-btn" onclick="growTrees()" title="Grow Trees">
+                        <i class="fas fa-arrow-up"></i>
+                    </button>
+                </div>
+
+                <div class="ground"></div>
+                <div class="rain" id="rainEffect"></div>
+                
+                <!-- Birds -->
+                <i class="fas fa-dove bird" style="left: -100px; animation-duration: 15s; animation-delay: 0s;"></i>
+                <i class="fas fa-dove bird" style="left: -100px; animation-duration: 20s; animation-delay: 5s; top: 30%;"></i>
+
+                <!-- Initial Trees -->
+                <div class="tree" style="left: 20%;" data-stage="3">
+                    <div class="tree-crown" style="width: 120px; height: 140px; margin-bottom: -20px;"></div>
+                    <div class="tree-trunk" style="width: 25px; height: 80px;"></div>
+                </div>
+                <div class="tree" style="left: 45%;" data-stage="2">
+                    <div class="tree-crown" style="width: 80px; height: 90px; margin-bottom: -10px;"></div>
+                    <div class="tree-trunk" style="width: 15px; height: 50px;"></div>
+                </div>
+                <div class="tree" style="left: 70%;" data-stage="3">
+                    <div class="tree-crown" style="width: 150px; height: 180px; margin-bottom: -30px;"></div>
+                    <div class="tree-trunk" style="width: 35px; height: 100px;"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+        // Generate Rain
+        const rainContainer = document.getElementById('rainEffect');
+        for(let i=0; i<100; i++) {
+            let drop = document.createElement('div');
+            drop.classList.add('drop');
+            drop.style.left = Math.random() * 100 + '%';
+            drop.style.animationDuration = (Math.random() * 1 + 0.5) + 's';
+            drop.style.animationDelay = Math.random() * 2 + 's';
+            rainContainer.appendChild(drop);
+        }
+
+        let isRaining = false;
+        function toggleRain() {
+            isRaining = !isRaining;
+            const btn = document.getElementById('rainBtn');
+            if(isRaining) {
+                rainContainer.classList.add('active');
+                btn.classList.add('active');
+            } else {
+                rainContainer.classList.remove('active');
+                btn.classList.remove('active');
+            }
+        }
+
+        function plantTree() {
+            const forest = document.getElementById('forestBox');
+            const tree = document.createElement('div');
+            tree.className = 'tree';
+            // Random position between 10% and 90%
+            const pos = Math.random() * 80 + 10;
+            tree.style.left = pos + '%';
+            tree.setAttribute('data-stage', '1');
+            
+            // Seedling stage
+            tree.innerHTML = `
+                <div class="tree-crown" style="width: 30px; height: 30px; margin-bottom: -5px;"></div>
+                <div class="tree-trunk" style="width: 5px; height: 15px;"></div>
+            `;
+            
+            // Insert before ground
+            forest.insertBefore(tree, document.querySelector('.ground'));
+        }
+
+        function growTrees() {
+            const trees = document.querySelectorAll('.tree');
+            trees.forEach(tree => {
+                let stage = parseInt(tree.getAttribute('data-stage'));
+                if(stage < 4) {
+                    stage++;
+                    tree.setAttribute('data-stage', stage);
+                    const crown = tree.querySelector('.tree-crown');
+                    const trunk = tree.querySelector('.tree-trunk');
+                    
+                    if(stage === 2) {
+                        crown.style.width = '80px'; crown.style.height = '90px'; crown.style.marginBottom = '-10px';
+                        trunk.style.width = '15px'; trunk.style.height = '50px';
+                    } else if(stage === 3) {
+                        crown.style.width = '120px'; crown.style.height = '140px'; crown.style.marginBottom = '-20px';
+                        trunk.style.width = '25px'; trunk.style.height = '80px';
+                    } else if(stage === 4) {
+                        crown.style.width = '160px'; crown.style.height = '190px'; crown.style.marginBottom = '-30px';
+                        trunk.style.width = '40px'; trunk.style.height = '120px';
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>

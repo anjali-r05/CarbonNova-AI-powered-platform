@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarbonNova - AI Assistant</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="matrix-bg"></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo-container">
+            <i class="fas fa-leaf logo-icon"></i> CarbonNova
+        </div>
+        <ul class="nav-links">
+            <li><a href="dashboard.html"><i class="fas fa-home"></i> Overview</a></li>
+            <li><a href="analytics.html"><i class="fas fa-tachometer-alt"></i> Carbon Score</a></li>
+            <li class="active"><a href="ai-assistant.html"><i class="fas fa-brain"></i> AI Assistant</a></li>
+            <li><a href="dashboard.html"><i class="fas fa-tasks"></i> Missions</a></li>
+            <li><a href="games.html"><i class="fas fa-gamepad"></i> Games</a></li>
+            <li><a href="dashboard.html"><i class="fas fa-gift"></i> Rewards</a></li>
+            <li><a href="forest.html"><i class="fas fa-tree"></i> Forest</a></li>
+            <li><a href="certificates.html"><i class="fas fa-award"></i> Certificates</a></li>
+            <li><a href="analytics.html"><i class="fas fa-chart-pie"></i> Analytics</a></li>
+            <li><a href="community.html"><i class="fas fa-users"></i> Community</a></li>
+            <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+        </ul>
+    </aside>
+
+    <main class="main-content" style="padding: 30px;">
+        <div class="flex-between mb-2">
+            <h1><i class="fas fa-brain text-cyan"></i> Nova AI</h1>
+            <div class="badge badge-purple" style="font-size: 1rem;"><i class="fas fa-bolt text-gold"></i> AI Engine Active</div>
+        </div>
+
+        <div class="grid-3" style="grid-template-columns: 2fr 1fr; align-items: start;">
+            
+            <!-- Main Chat Interface -->
+            <div class="chat-fullscreen reveal active">
+                <div class="chat-fs-messages" id="fs-chat-body">
+                    <div class="msg-bubble msg-ai">
+                        <strong>Nova:</strong> Hello! I am your advanced AI Carbon Coach. My goal is to help you reach Net Zero. How can I assist you today?
+                    </div>
+                </div>
+
+                <div class="chat-fs-input">
+                    <button class="voice-btn"><i class="fas fa-microphone"></i></button>
+                    <input type="text" id="fs-chat-input" placeholder="Type your message to Nova...">
+                    <button class="btn btn-primary" onclick="sendFsMessage()" style="padding: 12px 20px; border-radius: 30px;">Send</button>
+                </div>
+            </div>
+
+            <!-- AI Insights & Prompts -->
+            <div style="display: flex; flex-direction: column; gap: 20px;">
+                
+                <div class="glass-card reveal active" style="text-align: center;">
+                    <div class="ai-orb-container">
+                        <div class="ai-orb"></div>
+                    </div>
+                    <h3 class="mt-1 text-cyan">System Ready</h3>
+                    <p class="text-muted" style="font-size: 0.9rem;">Analyzing your carbon footprint patterns...</p>
+                </div>
+
+                <div class="glass-card reveal active">
+                    <h3 class="mb-1">Quick Actions</h3>
+                    <div class="prompt-chips">
+                        <div class="chip" onclick="quickPrompt('Reduce my emissions')">Reduce my emissions</div>
+                        <div class="chip" onclick="quickPrompt('Why did my score drop?')">Why did my score drop?</div>
+                        <div class="chip" onclick="quickPrompt('Create weekly eco plan')">Create weekly eco plan</div>
+                        <div class="chip" onclick="quickPrompt('Save electricity tips')">Save electricity tips</div>
+                        <div class="chip" onclick="quickPrompt('Best habits for students')">Best habits for students</div>
+                        <div class="chip" onclick="quickPrompt('Net zero roadmap')">Net zero roadmap</div>
+                    </div>
+                </div>
+
+                <div class="glass-card reveal active">
+                    <h3 class="mb-1">Smart Planner</h3>
+                    <div style="background: rgba(157, 78, 221, 0.1); border-left: 4px solid var(--purple-glow); padding: 15px; border-radius: 10px;">
+                        <strong><i class="fas fa-calendar-check text-purple"></i> AI Weekly Target</strong>
+                        <p class="text-muted mt-1" style="font-size: 0.9rem;">Decrease daily transport emissions by 10%. Generating daily tasks...</p>
+                        <button class="btn btn-outline mt-1" style="padding: 5px 15px; font-size: 0.8rem; width: 100%;">View Daily Tasks</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+        // Disable the global floating chatbot on this dedicated page
+        document.addEventListener("DOMContentLoaded", () => {
+            const floatingBot = document.getElementById('ai-chatbot');
+            if(floatingBot) floatingBot.style.display = 'none';
+        });
+
+        const chatBody = document.getElementById('fs-chat-body');
+        const chatInput = document.getElementById('fs-chat-input');
+
+        chatInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') sendFsMessage();
+        });
+
+        function quickPrompt(text) {
+            chatInput.value = text;
+            sendFsMessage();
+        }
+
+        function sendFsMessage() {
+            const msg = chatInput.value.trim();
+            if(!msg) return;
+
+            // User msg
+            chatBody.insertAdjacentHTML('beforeend', `<div class="msg-bubble msg-user">${msg}</div>`);
+            chatInput.value = '';
+            chatBody.scrollTop = chatBody.scrollHeight;
+
+            // Typing animation
+            setTimeout(() => {
+                const typingId = 'typing-' + Date.now();
+                chatBody.insertAdjacentHTML('beforeend', `<div class="msg-bubble msg-ai" id="${typingId}">...Nova is thinking...</div>`);
+                chatBody.scrollTop = chatBody.scrollHeight;
+                
+                setTimeout(() => {
+                    document.getElementById(typingId).remove();
+                    let reply = getMockAIResponse(msg);
+                    chatBody.insertAdjacentHTML('beforeend', `<div class="msg-bubble msg-ai"><strong>Nova:</strong> ${reply}</div>`);
+                    chatBody.scrollTop = chatBody.scrollHeight;
+                }, 1200);
+            }, 400);
+        }
+
+        function getMockAIResponse(msg) {
+            const lower = msg.toLowerCase();
+            if(lower.includes('reduce') || lower.includes('emissions')) {
+                return "Based on your data, your biggest emission source is transport. I suggest trying a 3-day carpool challenge. Would you like me to add this to your Smart Planner?";
+            }
+            if(lower.includes('score drop')) {
+                return "I noticed a 15% spike in electricity usage over the weekend. Check if any heating/cooling systems were left on standby.";
+            }
+            if(lower.includes('weekly eco plan')) {
+                return "Generating plan... 1) Meatless Monday. 2) Zero Waste Wednesday. 3) Cycle to work on Friday. I have added these to your missions.";
+            }
+            if(lower.includes('student')) {
+                return "For students: Buy second-hand textbooks, use digital notes instead of paper, and unplug your laptop charger when fully charged.";
+            }
+            if(lower.includes('net zero')) {
+                return "Your personalized Net Zero roadmap will take approximately 14 months of consistent habit changes. I'll guide you step-by-step!";
+            }
+            return "That's an insightful question. Let me analyze your historical carbon data and provide a detailed recommendation shortly.";
+        }
+        // Voice Recognition Logic
+        const voiceBtn = document.querySelector('.voice-btn');
+        let isListening = false;
+
+        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            const recognition = new SpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = 'en-US';
+
+            recognition.onstart = () => {
+                isListening = true;
+                console.log('Speech recognition started');
+                voiceBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i>';
+                voiceBtn.style.background = 'var(--primary-green)';
+            };
+
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                chatInput.value = transcript;
+                sendFsMessage();
+            };
+
+            recognition.onend = () => {
+                isListening = false;
+                voiceBtn.innerHTML = '<i class="fas fa-microphone"></i>';
+                voiceBtn.style.background = 'linear-gradient(135deg, var(--purple-glow), var(--cyan-highlight))';
+            };
+
+            voiceBtn.addEventListener('click', () => {
+                if (isListening) {
+                    recognition.stop();
+                } else {
+                    recognition.start();
+                }
+            });
+        } else {
+            voiceBtn.addEventListener('click', () => {
+                alert('Speech Recognition is not supported in this browser. Please try Chrome or Edge.');
+            });
+        }
+    </script>
+</body>
+</html>

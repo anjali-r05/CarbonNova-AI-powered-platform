@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarbonNova - Certificates</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Use html2pdf.js for downloading the certificate -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        .cert-card {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .cert-card:hover {
+            border-color: var(--gold-accent);
+            box-shadow: 0 0 20px rgba(255,215,0,0.2);
+            transform: translateY(-5px);
+        }
+        .cert-icon {
+            font-size: 3rem;
+            color: var(--gold-accent);
+            margin-bottom: 15px;
+        }
+
+        /* Certificate Template (Professional Fix) */
+        .certificate-wrapper {
+            position: absolute;
+            left: -9999px;
+            top: 0;
+            z-index: -100;
+            visibility: hidden;
+        }
+
+        .certificate-template {
+            width: 1000px;
+            height: 700px;
+            background: #fff;
+            color: #000;
+            padding: 20px;
+            box-sizing: border-box;
+            position: relative;
+            font-family: 'Times New Roman', serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .certificate-border {
+            width: 100%;
+            height: 100%;
+            border: 15px solid #0a2e1f;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+
+        .certificate-inner {
+            width: 100%;
+            height: 100%;
+            border: 2px solid #ffd700;
+            padding: 40px;
+            box-sizing: border-box;
+            text-align: center;
+            position: relative;
+            background: linear-gradient(to bottom, #ffffff, #f9fdfc);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .cert-logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.8rem;
+            color: #0a2e1f;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .cert-title {
+            font-size: 3.5rem;
+            color: #0a2e1f;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-weight: 800;
+        }
+
+        .cert-subtitle {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        .cert-recipient-label {
+            font-style: italic;
+            color: #666;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .cert-recipient {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ccc;
+            display: inline-block;
+            padding: 0 40px;
+            font-family: 'Brush Script MT', cursive, sans-serif;
+        }
+
+        .cert-description {
+            font-size: 1.1rem;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.4;
+            height: 80px; /* Fixed height to prevent overflow */
+            overflow: hidden;
+        }
+
+        .cert-footer {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            align-items: flex-end;
+            margin-top: 30px;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        .signature-block {
+            text-align: center;
+        }
+
+        .signature {
+            font-family: 'Brush Script MT', cursive, sans-serif;
+            font-size: 1.8rem;
+            color: #0a2e1f;
+            margin-bottom: 2px;
+        }
+
+        .signature-line {
+            width: 80%;
+            margin: 0 auto 5px;
+            border-top: 1px solid #000;
+        }
+
+        .signature-label {
+            font-size: 0.8rem;
+            color: #555;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .earth-badge {
+            font-size: 3rem;
+            color: #00ff88;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(0,255,136,0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-wave"></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo-container">
+            <i class="fas fa-leaf logo-icon"></i> CarbonNova
+        </div>
+        <ul class="nav-links">
+            <li><a href="dashboard.html"><i class="fas fa-home"></i> Overview</a></li>
+            <li><a href="analytics.html"><i class="fas fa-tachometer-alt"></i> Carbon Score</a></li>
+            <li><a href="ai-assistant.html"><i class="fas fa-brain"></i> AI Assistant</a></li>
+            <li><a href="dashboard.html"><i class="fas fa-tasks"></i> Missions</a></li>
+            <li><a href="games.html"><i class="fas fa-gamepad"></i> Games</a></li>
+            <li><a href="dashboard.html"><i class="fas fa-gift"></i> Rewards</a></li>
+            <li><a href="forest.html"><i class="fas fa-tree"></i> Forest</a></li>
+            <li class="active"><a href="certificates.html"><i class="fas fa-award"></i> Certificates</a></li>
+            <li><a href="analytics.html"><i class="fas fa-chart-pie"></i> Analytics</a></li>
+            <li><a href="community.html"><i class="fas fa-users"></i> Community</a></li>
+            <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        <div style="padding: 30px;">
+            <div class="flex-between mb-2">
+                <h1><i class="fas fa-award text-gold"></i> Achievement Certificates</h1>
+                <p class="text-muted">Total Earned: <span class="fw-bold text-main">3</span></p>
+            </div>
+            
+            <p class="text-muted mb-2">Download your verifiable certificates to share on LinkedIn or print.</p>
+
+            <div class="grid-3">
+                <div class="cert-card reveal active">
+                    <i class="fas fa-medal cert-icon"></i>
+                    <h3>Climate Hero Award</h3>
+                    <p class="text-muted" style="font-size: 0.9rem; margin: 10px 0;">Awarded for completing 50 daily missions and saving 100kg CO2.</p>
+                    <button class="btn btn-primary" onclick="showPreview('Climate Hero Award', 'Outstanding dedication to daily carbon reduction and achieving the 100kg CO2 saved milestone.')" style="padding: 8px 15px; font-size: 0.9rem; width: 100%;">
+                        <i class="fas fa-eye" style="margin-right: 5px;"></i> View & Download
+                    </button>
+                </div>
+
+                <div class="cert-card reveal active">
+                    <i class="fas fa-tree cert-icon" style="color: var(--primary-green);"></i>
+                    <h3>Tree Guardian</h3>
+                    <p class="text-muted" style="font-size: 0.9rem; margin: 10px 0;">Awarded for growing a full digital forest of 10 mature trees.</p>
+                    <button class="btn btn-outline" onclick="showPreview('Tree Guardian Award', 'Commitment to digital reforestation and continuous engagement in the Forest Mode.')" style="padding: 8px 15px; font-size: 0.9rem; width: 100%;">
+                        <i class="fas fa-eye" style="margin-right: 5px;"></i> View & Download
+                    </button>
+                </div>
+
+                <div class="cert-card reveal active">
+                    <i class="fas fa-trophy cert-icon" style="color: var(--cyan-highlight);"></i>
+                    <h3>Top 10% Leaderboard</h3>
+                    <p class="text-muted" style="font-size: 0.9rem; margin: 10px 0;">Awarded for ranking in the top 10% of the weekly eco-tournament.</p>
+                    <button class="btn btn-outline" onclick="showPreview('Top Performer Award', 'Excellence in the weekly Climate Quiz Arena and ranking among the top global players.')" style="padding: 8px 15px; font-size: 0.9rem; width: 100%;">
+                        <i class="fas fa-eye" style="margin-right: 5px;"></i> View & Download
+                    </button>
+                </div>
+
+                <!-- Locked Certificate -->
+                <div class="cert-card reveal active" style="opacity: 0.5; cursor: not-allowed; border-color: rgba(255,255,255,0.1);">
+                    <i class="fas fa-lock cert-icon" style="color: #666;"></i>
+                    <h3>Earth Guardian (Locked)</h3>
+                    <p class="text-muted" style="font-size: 0.9rem; margin: 10px 0;">Reach Level 10 to unlock this prestigious certificate.</p>
+                    <button class="btn btn-outline" disabled style="padding: 8px 15px; font-size: 0.9rem; width: 100%; border-color: #444; color: #666;">
+                        Locked
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Hidden Certificate Template for PDF Generation -->
+    <div class="certificate-wrapper" id="certificateWrapper">
+        <div class="certificate-template" id="certificateTemplate">
+            <div class="certificate-border">
+                <div class="certificate-inner">
+                    <div class="cert-logo">
+                        <i class="fas fa-leaf" style="color: #00ff88;"></i> CarbonNova
+                    </div>
+                    
+                    <div class="cert-title" id="certTitleText">Certificate</div>
+                    <div class="cert-subtitle">OF ACHIEVEMENT</div>
+
+                    <div class="earth-badge">
+                        <i class="fas fa-globe-americas"></i>
+                    </div>
+                    
+                    <div class="cert-recipient-label">This certificate is proudly presented to</div>
+                    
+                    <div class="cert-recipient" id="certNameText">John Doe</div>
+                    
+                    <div class="cert-description" id="certDescText">
+                        Has successfully demonstrated outstanding commitment to sustainability and climate action through the CarbonNova platform.
+                    </div>
+                    
+                    <div class="cert-footer">
+                        <div class="signature-block">
+                            <div class="signature">Nova AI</div>
+                            <div class="signature-line"></div>
+                            <div class="signature-label">Lead AI Eco Coach</div>
+                        </div>
+                        
+                        <div class="signature-block">
+                            <div class="signature" style="font-family: 'Times New Roman', serif; font-size: 1.2rem;" id="certDateText"></div>
+                            <div class="signature-line"></div>
+                            <div class="signature-label">Date Issued</div>
+                        </div>
+                        
+                        <div class="signature-block">
+                            <div class="signature">Earth Guardian</div>
+                            <div class="signature-line"></div>
+                            <div class="signature-label">Eco Sustainability Board</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="margin-top: 20px; text-align: center;" class="no-print">
+                <button class="btn btn-primary" onclick="window.print()">Print Instead</button>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        @media print {
+            body * { visibility: hidden; }
+            #certificateWrapper, #certificateWrapper * { visibility: visible; }
+            #certificateWrapper { position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: flex !important; justify-content: center; align-items: center; background: white; z-index: 99999; }
+            .no-print { display: none !important; }
+        }
+    </style>
+
+    <!-- Certificate Preview Modal -->
+    <div class="modal-overlay" id="previewModal">
+        <div class="modal-content">
+            <i class="fas fa-times close-modal" onclick="closePreview()"></i>
+            <h2 class="mb-2">Certificate Preview</h2>
+            
+            <div id="previewContainer" style="overflow: auto; border: 1px solid #333; margin-bottom: 20px;">
+                <!-- The template will be rendered here via JS for preview -->
+                <div id="renderTarget"></div>
+            </div>
+
+            <div class="flex-between">
+                <p class="text-muted">High-resolution export ready.</p>
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn btn-outline" onclick="exportFile('png')">
+                        <i class="fas fa-image"></i> Download PNG
+                    </button>
+                    <button class="btn btn-primary" onclick="exportFile('pdf')">
+                        <i class="fas fa-file-pdf"></i> Download PDF
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        let currentCertData = {};
+
+        function showPreview(title, description) {
+            const username = localStorage.getItem('carbonNovaUser') || 'Earth Guardian';
+            currentCertData = { title, name: username, description };
+            
+            // Setup the hidden template
+            document.getElementById('certTitleText').innerText = title;
+            document.getElementById('certNameText').innerText = currentCertData.name;
+            document.getElementById('certDescText').innerText = description;
+            const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+            document.getElementById('certDateText').innerText = today;
+
+            // Clone template into preview
+            const template = document.getElementById('certificateTemplate').cloneNode(true);
+            template.style.transform = 'scale(0.6)';
+            template.style.transformOrigin = 'top left';
+            const renderTarget = document.getElementById('renderTarget');
+            renderTarget.innerHTML = '';
+            renderTarget.appendChild(template);
+            
+            // Adjust container height for scaled content
+            document.getElementById('previewContainer').style.height = '450px';
+
+            document.getElementById('previewModal').classList.add('active');
+        }
+
+        function closePreview() {
+            document.getElementById('previewModal').classList.remove('active');
+        }
+
+        function exportFile(format) {
+            const username = currentCertData.name.replace(/\s+/g, '_');
+            const filename = `CarbonNova_Certificate_${username}`;
+            const element = document.getElementById('certificateTemplate');
+            
+            // Ensure visible for capture but hidden from user view
+            const wrapper = document.getElementById('certificateWrapper');
+            wrapper.style.visibility = 'visible';
+            wrapper.style.left = '0';
+            wrapper.style.top = '0';
+            wrapper.style.opacity = '1';
+
+            if (format === 'pdf') {
+                const opt = {
+                    margin: 0,
+                    filename: `${filename}.pdf`,
+                    image: { type: 'jpeg', quality: 1.0 },
+                    html2canvas: { 
+                        scale: 3, 
+                        useCORS: true, 
+                        letterRendering: true,
+                        logging: false
+                    },
+                    jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
+                };
+                html2pdf().from(element).set(opt).save().then(() => {
+                    cleanup();
+                }).catch(err => {
+                    console.error('PDF Export Error:', err);
+                    alert('Export failed. Please try PNG or use a different browser.');
+                    cleanup();
+                });
+            } else {
+                html2canvas(element, { 
+                    scale: 3, 
+                    useCORS: true,
+                    logging: false
+                }).then(canvas => {
+                    const link = document.createElement('a');
+                    link.download = `${filename}.png`;
+                    link.href = canvas.toDataURL('image/png', 1.0);
+                    link.click();
+                    cleanup();
+                }).catch(err => {
+                    console.error('PNG Export Error:', err);
+                    alert('Export failed.');
+                    cleanup();
+                });
+            }
+
+            function cleanup() {
+                wrapper.style.visibility = 'hidden';
+                wrapper.style.left = '-9999px';
+                wrapper.style.opacity = '0';
+                closePreview();
+            }
+        }
+    </script>
+</body>
+</html>

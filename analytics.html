@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarbonNova - Analytics</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="bg-wave"></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo-container">
+            <i class="fas fa-leaf logo-icon"></i> CarbonNova
+        </div>
+        <ul class="nav-links">
+            <li><a href="dashboard.html"><i class="fas fa-home"></i> Overview</a></li>
+            <li><a href="analytics.html"><i class="fas fa-tachometer-alt"></i> Carbon Score</a></li>
+            <li><a href="ai-assistant.html"><i class="fas fa-brain"></i> AI Assistant</a></li>
+            <li><a href="dashboard.html"><i class="fas fa-tasks"></i> Missions</a></li>
+            <li><a href="games.html"><i class="fas fa-gamepad"></i> Games</a></li>
+            <li><a href="dashboard.html"><i class="fas fa-gift"></i> Rewards</a></li>
+            <li><a href="forest.html"><i class="fas fa-tree"></i> Forest</a></li>
+            <li><a href="certificates.html"><i class="fas fa-award"></i> Certificates</a></li>
+            <li class="active"><a href="analytics.html"><i class="fas fa-chart-pie"></i> Analytics</a></li>
+            <li><a href="community.html"><i class="fas fa-users"></i> Community</a></li>
+            <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        <div style="padding: 30px;">
+            <div class="flex-between mb-2">
+                <h1><i class="fas fa-chart-line text-cyan"></i> Impact Analytics</h1>
+                <div class="input-group" style="margin-bottom: 0; width: 200px;">
+                    <select style="padding: 8px 15px;">
+                        <option>This Week</option>
+                        <option>This Month</option>
+                        <option>This Year</option>
+                        <option>All Time</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="grid-2 mb-2">
+                <!-- Main Trend Chart -->
+                <div class="glass-card reveal active">
+                    <h3 class="mb-2">Carbon Footprint Trend (kg CO2)</h3>
+                    <div style="position: relative; height: 300px;">
+                        <canvas id="trendChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Score Growth -->
+                <div class="glass-card reveal active">
+                    <h3 class="mb-2">Eco Score Growth</h3>
+                    <div style="position: relative; height: 300px;">
+                        <canvas id="scoreChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-3">
+                <!-- Emissions Breakdown -->
+                <div class="glass-card reveal active" style="grid-column: span 1;">
+                    <h3 class="mb-2">Emissions Breakdown</h3>
+                    <div style="position: relative; height: 250px;">
+                        <canvas id="breakdownChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="glass-card reveal active" style="grid-column: span 2; display: flex; flex-direction: column; justify-content: center;">
+                    <h3 class="mb-2">AI Insights</h3>
+                    <div style="display: flex; gap: 20px;">
+                        <div style="flex: 1; background: rgba(0,255,136,0.1); padding: 20px; border-radius: 15px; border-left: 4px solid var(--primary-green);">
+                            <i class="fas fa-arrow-down text-green mb-1" style="font-size: 1.5rem;"></i>
+                            <h4>15% Decrease</h4>
+                            <p class="text-muted" style="font-size: 0.9rem;">Your transport emissions are down compared to last week.</p>
+                        </div>
+                        <div style="flex: 1; background: rgba(0,229,255,0.1); padding: 20px; border-radius: 15px; border-left: 4px solid var(--cyan-highlight);">
+                            <i class="fas fa-bolt text-cyan mb-1" style="font-size: 1.5rem;"></i>
+                            <h4>Energy Efficient</h4>
+                            <p class="text-muted" style="font-size: 0.9rem;">You are in the top 5% of energy savers in your region.</p>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary mt-2" style="align-self: flex-start;">Generate Full Report (PDF)</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+        // Common Chart Defaults
+        Chart.defaults.color = '#8b9bb4';
+        Chart.defaults.font.family = "'Outfit', sans-serif";
+
+        // Trend Chart (Line)
+        const trendCtx = document.getElementById('trendChart').getContext('2d');
+        new Chart(trendCtx, {
+            type: 'line',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                datasets: [{
+                    label: 'Your Emissions',
+                    data: [12, 11.5, 10, 10.5, 9, 8.5, 8],
+                    borderColor: '#00ff88',
+                    backgroundColor: 'rgba(0, 255, 136, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4
+                },
+                {
+                    label: 'Average User',
+                    data: [14, 14, 14, 13.5, 15, 16, 15],
+                    borderColor: '#9d4edd',
+                    borderWidth: 2,
+                    borderDash: [5, 5],
+                    fill: false,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.05)' } },
+                    x: { grid: { color: 'rgba(255,255,255,0.05)' } }
+                },
+                plugins: {
+                    legend: { position: 'top' }
+                }
+            }
+        });
+
+        // Score Chart (Bar)
+        const scoreCtx = document.getElementById('scoreChart').getContext('2d');
+        new Chart(scoreCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                datasets: [{
+                    label: 'Eco Score',
+                    data: [65, 72, 78, 85],
+                    backgroundColor: 'rgba(0, 229, 255, 0.6)',
+                    borderColor: '#00e5ff',
+                    borderWidth: 1,
+                    borderRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.05)' }, max: 100 },
+                    x: { grid: { color: 'rgba(255,255,255,0.05)' } }
+                }
+            }
+        });
+
+        // Breakdown Chart (Doughnut)
+        const breakdownCtx = document.getElementById('breakdownChart').getContext('2d');
+        new Chart(breakdownCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Transport', 'Food', 'Energy', 'Shopping'],
+                datasets: [{
+                    data: [40, 25, 20, 15],
+                    backgroundColor: [
+                        '#ff5555',
+                        '#ffd700',
+                        '#00ff88',
+                        '#00e5ff'
+                    ],
+                    borderWidth: 0,
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'right' }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

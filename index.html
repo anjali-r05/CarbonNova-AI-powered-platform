@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarbonNova - Gamifying Climate Action With AI</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Hero Section Specific Styles */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .earth-container {
+            position: absolute;
+            z-index: -1;
+            width: 800px;
+            height: 800px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #00ff88 0%, #003311 50%, #050b0f 100%);
+            box-shadow: 0 0 100px rgba(0, 255, 136, 0.2), inset 0 0 50px rgba(0, 0, 0, 0.8);
+            animation: rotateEarth 60s infinite linear;
+            opacity: 0.3;
+        }
+
+        @keyframes rotateEarth {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .orbit-ring {
+            position: absolute;
+            border: 1px dashed rgba(0, 255, 136, 0.3);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .hero-content h1 {
+            font-size: 5rem;
+            font-family: var(--font-accent);
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            background: linear-gradient(to right, #00ff88, #00e5ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            text-shadow: 0 0 30px rgba(0,255,136,0.3);
+        }
+
+        .hero-content p {
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .stats-section {
+            padding: 80px 20px;
+            background: rgba(10,20,30,0.5);
+            border-top: 1px solid var(--glass-border);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .stat-card h3 {
+            font-size: 3rem;
+            color: var(--primary-green);
+            margin-bottom: 10px;
+            font-family: var(--font-accent);
+        }
+
+        .features-section {
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            font-family: var(--font-accent);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--cyan-highlight);
+            margin-bottom: 20px;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            background: rgba(5,11,15,0.7);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .nav-links-top {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links-top a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .nav-links-top a:hover {
+            color: var(--primary-green);
+        }
+
+        footer {
+            padding: 50px 20px;
+            text-align: center;
+            background: rgba(0,0,0,0.5);
+            border-top: 1px solid var(--glass-border);
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-wave"></div>
+    
+    <nav>
+        <div class="logo-container" style="border: none; padding: 0;">
+            <i class="fas fa-leaf logo-icon"></i>
+            CarbonNova
+        </div>
+        <ul class="nav-links-top">
+            <li><a href="#features">Features</a></li>
+            <li><a href="#impact">Impact</a></li>
+            <li><a href="login.html" class="text-cyan">Login</a></li>
+            <li><a href="signup.html" class="btn btn-primary" style="padding: 8px 20px;">Join Now</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero">
+        <div class="earth-container"></div>
+        <div class="orbit-ring" style="width: 900px; height: 900px;"></div>
+        <div class="orbit-ring" style="width: 1100px; height: 1100px; border-color: rgba(0,229,255,0.2);"></div>
+        
+        <div class="hero-content reveal">
+            <h1>CarbonNova</h1>
+            <p>AI Powered Sustainability Platform For A Cleaner Future. Gamifying Climate Action.</p>
+            <div style="display: flex; gap: 20px; justify-content: center;">
+                <a href="signup.html" class="btn btn-primary">Start Free</a>
+                <a href="#features" class="btn btn-outline">Watch Demo</a>
+                <a href="dashboard.html" class="btn btn-outline" style="border-color: var(--cyan-highlight); color: var(--cyan-highlight);">Explore Dashboard</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="impact" class="stats-section">
+        <div class="grid-4" style="max-width: 1200px; margin: 0 auto;">
+            <div class="stat-card glass-panel reveal">
+                <h3 id="stat-trees">0</h3>
+                <p>Trees Grown</p>
+            </div>
+            <div class="stat-card glass-panel reveal">
+                <h3 id="stat-co2">0</h3>
+                <p>CO2 Reduced (Tons)</p>
+            </div>
+            <div class="stat-card glass-panel reveal">
+                <h3 id="stat-users">0</h3>
+                <p>Active Users</p>
+            </div>
+            <div class="stat-card glass-panel reveal">
+                <h3 id="stat-missions">0</h3>
+                <p>Missions Completed</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="features-section">
+        <h2 class="section-title reveal">Why CarbonNova?</h2>
+        <div class="grid-3">
+            <div class="glass-card reveal">
+                <i class="fas fa-brain feature-icon"></i>
+                <h3>AI Carbon Coach</h3>
+                <p class="mt-1 text-muted">Get personalized suggestions to reduce emissions, save energy, and plan your net-zero journey with our advanced AI.</p>
+            </div>
+            <div class="glass-card reveal">
+                <i class="fas fa-gamepad feature-icon" style="color: var(--primary-green);"></i>
+                <h3>Eco Games</h3>
+                <p class="mt-1 text-muted">Play fun mini-games like Waste Sorting and Water Saver. Turn learning about climate change into an addictive experience.</p>
+            </div>
+            <div class="glass-card reveal">
+                <i class="fas fa-award feature-icon" style="color: var(--gold-accent);"></i>
+                <h3>Rewards & Certificates</h3>
+                <p class="mt-1 text-muted">Earn XP, Coins, and Badges. Generate beautiful verifiable PDF certificates to showcase your environmental impact.</p>
+            </div>
+            <div class="glass-card reveal">
+                <i class="fas fa-users feature-icon" style="color: var(--purple-glow);"></i>
+                <h3>Family Challenges</h3>
+                <p class="mt-1 text-muted">Compete with friends, family, or global teams in weekly eco-tournaments and leaderboards.</p>
+            </div>
+            <div class="glass-card reveal">
+                <i class="fas fa-chart-line feature-icon" style="color: var(--cyan-highlight);"></i>
+                <h3>Real Impact Analytics</h3>
+                <p class="mt-1 text-muted">Visualize your carbon footprint trend and score growth over time with premium animated charts.</p>
+            </div>
+            <div class="glass-card reveal">
+                <i class="fas fa-tree feature-icon" style="color: var(--primary-green);"></i>
+                <h3>Forest Mode</h3>
+                <p class="mt-1 text-muted">Every completed mission grows your digital forest. Watch seeds turn into saplings and lush forests.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <h2 class="text-green mb-1">CarbonNova</h2>
+        <p class="text-muted">Gamifying Climate Action With AI.</p>
+        <p class="mt-2 text-muted" style="font-size: 0.8rem;">© 2026 CarbonNova Inc. Built for a sustainable future.</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Hero Counters Animation
+        function animateValue(id, start, end, duration, suffix="") {
+            if (start === end) return;
+            var range = end - start;
+            var current = start;
+            var increment = end > start ? 1 : -1;
+            if(range > 100) {
+                increment = Math.floor(range / (duration / 50));
+            }
+            var stepTime = Math.abs(Math.floor(duration / (range/increment)));
+            var obj = document.getElementById(id);
+            var timer = setInterval(function() {
+                current += increment;
+                if ((increment > 0 && current >= end) || (increment < 0 && current <= end)) {
+                    current = end;
+                    clearInterval(timer);
+                }
+                obj.innerHTML = current.toLocaleString() + suffix;
+            }, stepTime);
+        }
+
+        // Trigger animations when in view
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    if(entry.target.id === 'impact') {
+                        animateValue("stat-trees", 0, 12450, 2000, "+");
+                        animateValue("stat-co2", 0, 890, 2000, "t");
+                        animateValue("stat-users", 0, 5200, 2000, "+");
+                        animateValue("stat-missions", 0, 45890, 2000, "");
+                        observer.unobserve(entry.target);
+                    }
+                }
+            });
+        });
+
+        document.querySelectorAll('.reveal, .stats-section').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarbonNova - Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js for Gauge and simple charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .top-nav {
+            padding: 15px 30px;
+        }
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary-green), var(--cyan-highlight));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #000;
+        }
+        .stat-badge {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 5px 15px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            padding: 30px;
+        }
+        .gauge-container {
+            position: relative;
+            height: 250px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .gauge-text {
+            position: absolute;
+            text-align: center;
+            top: 60%;
+        }
+        .gauge-text h2 {
+            font-size: 3rem;
+            color: var(--primary-green);
+            line-height: 1;
+        }
+        .mission-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 10px;
+            margin-bottom: 10px;
+            border: 1px solid transparent;
+            transition: border 0.3s;
+        }
+        .mission-item:hover {
+            border-color: var(--cyan-highlight);
+        }
+        .mission-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-wave"></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo-container">
+            <i class="fas fa-leaf logo-icon"></i> CarbonNova
+        </div>
+        <ul class="nav-links">
+            <li class="active"><a href="dashboard.html"><i class="fas fa-home"></i> Overview</a></li>
+            <li><a href="analytics.html"><i class="fas fa-tachometer-alt"></i> Carbon Score</a></li>
+            <li><a href="ai-assistant.html"><i class="fas fa-brain"></i> AI Assistant</a></li>
+            <li><a href="dashboard.html"><i class="fas fa-tasks"></i> Missions</a></li>
+            <li><a href="games.html"><i class="fas fa-gamepad"></i> Games</a></li>
+            <li><a href="dashboard.html"><i class="fas fa-gift"></i> Rewards</a></li>
+            <li><a href="forest.html"><i class="fas fa-tree"></i> Forest</a></li>
+            <li><a href="certificates.html"><i class="fas fa-award"></i> Certificates</a></li>
+            <li><a href="analytics.html"><i class="fas fa-chart-pie"></i> Analytics</a></li>
+            <li><a href="community.html"><i class="fas fa-users"></i> Community</a></li>
+            <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Navbar -->
+        <nav class="top-nav">
+            <div class="search-bar" style="position: relative; width: 300px;">
+                <i class="fas fa-search" style="position: absolute; left: 15px; top: 12px; color: var(--text-muted);"></i>
+                <input type="text" placeholder="Search..." style="width: 100%; padding: 10px 10px 10px 40px; border-radius: 20px; border: 1px solid var(--glass-border); background: rgba(0,0,0,0.3); color: white;">
+            </div>
+            
+            <div class="user-profile">
+                <div class="stat-badge"><i class="fas fa-fire text-gold"></i> 7 Day Streak</div>
+                <div class="stat-badge"><i class="fas fa-coins" style="color: #ffd700;"></i> 1,250 Coins</div>
+                <div class="stat-badge"><i class="fas fa-star text-purple"></i> Lvl 5 (Green Warrior)</div>
+                <i class="fas fa-bell" style="font-size: 1.2rem; margin: 0 10px; cursor: pointer;"></i>
+                <div class="avatar">JD</div>
+            </div>
+        </nav>
+
+        <div class="dashboard-grid">
+            <!-- Left Column -->
+            <div style="display: flex; flex-direction: column; gap: 20px;">
+                <!-- Welcome Card -->
+                <div class="glass-card reveal active">
+                    <h2 class="mb-1">Welcome back, John! 🌍</h2>
+                    <p class="text-muted">You've reduced your carbon footprint by 15% this week. Keep up the great work!</p>
+                </div>
+
+                <!-- Stats Grid -->
+                <div class="grid-3">
+                    <div class="glass-card reveal active" style="text-align: center;">
+                        <i class="fas fa-tree text-green mb-1" style="font-size: 2rem;"></i>
+                        <h3>12</h3>
+                        <p class="text-muted">Trees Grown</p>
+                    </div>
+                    <div class="glass-card reveal active" style="text-align: center;">
+                        <i class="fas fa-cloud-download-alt text-cyan mb-1" style="font-size: 2rem;"></i>
+                        <h3>45 kg</h3>
+                        <p class="text-muted">CO2 Saved</p>
+                    </div>
+                    <div class="glass-card reveal active" style="text-align: center;">
+                        <i class="fas fa-trophy text-gold mb-1" style="font-size: 2rem;"></i>
+                        <h3>Top 10%</h3>
+                        <p class="text-muted">Global Rank</p>
+                    </div>
+                </div>
+
+                <!-- AI Carbon Coach / Score -->
+                <div class="glass-card reveal active">
+                    <div class="flex-between mb-2">
+                        <h3>AI Eco Score</h3>
+                        <span class="badge badge-green">Grade: A-</span>
+                    </div>
+                    <div class="gauge-container">
+                        <canvas id="scoreGauge"></canvas>
+                        <div class="gauge-text">
+                            <h2 id="animatedScore">0</h2>
+                            <p class="text-muted">Out of 100</p>
+                        </div>
+                    </div>
+                    <div class="mt-2" style="background: rgba(0, 229, 255, 0.1); padding: 15px; border-radius: 10px; border-left: 3px solid var(--cyan-highlight);">
+                        <p><i class="fas fa-brain text-cyan"></i> <strong>AI Suggestion:</strong> Your transport emissions are high this week. Consider carpooling or taking the bus tomorrow to boost your score to 90+.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div style="display: flex; flex-direction: column; gap: 20px;">
+                <!-- Daily Missions -->
+                <div class="glass-card reveal active">
+                    <div class="flex-between mb-2">
+                        <h3>Daily Missions</h3>
+                        <span class="text-muted">2/4 Done</span>
+                    </div>
+                    
+                    <div class="mission-item">
+                        <div>
+                            <strong>Zero Plastic Day</strong>
+                            <p class="text-muted" style="font-size: 0.8rem;">Avoid single-use plastic today</p>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span class="text-gold">+50 XP</span>
+                            <input type="checkbox" checked disabled>
+                        </div>
+                    </div>
+
+                    <div class="mission-item">
+                        <div>
+                            <strong>Meatless Meal</strong>
+                            <p class="text-muted" style="font-size: 0.8rem;">Have at least one vegetarian meal</p>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span class="text-gold">+30 XP</span>
+                            <input type="checkbox" checked disabled>
+                        </div>
+                    </div>
+
+                    <div class="mission-item">
+                        <div>
+                            <strong>Eco Commute</strong>
+                            <p class="text-muted" style="font-size: 0.8rem;">Walk, cycle, or take public transit</p>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span class="text-gold">+100 XP</span>
+                            <input type="checkbox">
+                        </div>
+                    </div>
+
+                    <div class="mission-item">
+                        <div>
+                            <strong>Energy Saver</strong>
+                            <p class="text-muted" style="font-size: 0.8rem;">Unplug 3 standby devices</p>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span class="text-gold">+40 XP</span>
+                            <input type="checkbox">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Achievements -->
+                <div class="glass-card reveal active">
+                    <h3 class="mb-2">Recent Badges</h3>
+                    <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                        <div style="text-align: center;">
+                            <div style="width: 60px; height: 60px; border-radius: 50%; background: rgba(0,255,136,0.2); border: 2px solid var(--primary-green); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--primary-green); margin: 0 auto 5px;">
+                                <i class="fas fa-fire"></i>
+                            </div>
+                            <span style="font-size: 0.8rem;">7 Day Streak</span>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="width: 60px; height: 60px; border-radius: 50%; background: rgba(0,229,255,0.2); border: 2px solid var(--cyan-highlight); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--cyan-highlight); margin: 0 auto 5px;">
+                                <i class="fas fa-tint"></i>
+                            </div>
+                            <span style="font-size: 0.8rem;">Water Saver</span>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="width: 60px; height: 60px; border-radius: 50%; background: rgba(157, 78, 221, 0.2); border: 2px solid var(--purple-glow); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--purple-glow); margin: 0 auto 5px;">
+                                <i class="fas fa-leaf"></i>
+                            </div>
+                            <span style="font-size: 0.8rem;">Tree Hero</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+        // Score Gauge Chart Configuration
+        const ctx = document.getElementById('scoreGauge').getContext('2d');
+        const score = 85;
+
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                datasets: [{
+                    data: [score, 100 - score],
+                    backgroundColor: [
+                        '#00ff88', // Green for score
+                        'rgba(255, 255, 255, 0.1)' // Background
+                    ],
+                    borderWidth: 0,
+                    circumference: 180,
+                    rotation: 270,
+                    borderRadius: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '80%',
+                plugins: {
+                    tooltip: { enabled: false }
+                },
+                animation: {
+                    animateRotate: true,
+                    duration: 2000
+                }
+            }
+        });
+
+        // Animate Score Number
+        let currentScore = 0;
+        const scoreEl = document.getElementById('animatedScore');
+        const interval = setInterval(() => {
+            currentScore += 1;
+            scoreEl.innerText = currentScore;
+            if(currentScore >= score) clearInterval(interval);
+        }, 20);
+    </script>
+</body>
+</html>

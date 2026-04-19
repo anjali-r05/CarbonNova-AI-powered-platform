@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarbonNova - Community</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .community-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            padding: 30px;
+        }
+        .feed-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: transform 0.3s ease;
+        }
+        .feed-item:hover {
+            transform: scale(1.02);
+            border-color: var(--primary-green);
+        }
+        .feed-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+        .feed-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--purple-glow), var(--cyan-highlight));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        .kudos-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--glass-border);
+            color: var(--text-main);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            margin-right: 8px;
+            transition: all 0.3s;
+        }
+        .kudos-btn:hover {
+            background: var(--primary-green-glow);
+            border-color: var(--primary-green);
+        }
+        .leaderboard-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .leaderboard-row:last-child {
+            border-bottom: none;
+        }
+        .rank {
+            width: 30px;
+            font-weight: bold;
+            color: var(--cyan-highlight);
+        }
+        .challenge-card {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 229, 255, 0.1));
+            border: 1px solid var(--primary-green);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-wave"></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo-container">
+            <i class="fas fa-leaf logo-icon"></i> CarbonNova
+        </div>
+        <ul class="nav-links">
+            <li><a href="dashboard.html"><i class="fas fa-home"></i> Overview</a></li>
+            <li><a href="analytics.html"><i class="fas fa-tachometer-alt"></i> Carbon Score</a></li>
+            <li><a href="ai-assistant.html"><i class="fas fa-brain"></i> AI Assistant</a></li>
+            <li><a href="dashboard.html"><i class="fas fa-tasks"></i> Missions</a></li>
+            <li><a href="games.html"><i class="fas fa-gamepad"></i> Games</a></li>
+            <li><a href="dashboard.html"><i class="fas fa-gift"></i> Rewards</a></li>
+            <li><a href="forest.html"><i class="fas fa-tree"></i> Forest</a></li>
+            <li><a href="certificates.html"><i class="fas fa-award"></i> Certificates</a></li>
+            <li><a href="analytics.html"><i class="fas fa-chart-pie"></i> Analytics</a></li>
+            <li class="active"><a href="community.html"><i class="fas fa-users"></i> Community</a></li>
+            <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        <nav class="top-nav">
+            <div class="search-bar" style="position: relative; width: 300px;">
+                <i class="fas fa-search" style="position: absolute; left: 15px; top: 12px; color: var(--text-muted);"></i>
+                <input type="text" placeholder="Search community..." style="width: 100%; padding: 10px 10px 10px 40px; border-radius: 20px; border: 1px solid var(--glass-border); background: rgba(0,0,0,0.3); color: white;">
+            </div>
+            
+            <div class="user-profile">
+                <div class="stat-badge"><i class="fas fa-users text-cyan"></i> 15.4k Members</div>
+                <div class="avatar">JD</div>
+            </div>
+        </nav>
+
+        <div class="community-grid">
+            <!-- Left Column: Feed & Challenges -->
+            <div style="display: flex; flex-direction: column; gap: 20px;">
+                <!-- Community Stats -->
+                <div class="grid-3">
+                    <div class="glass-card reveal active" style="text-align: center;">
+                        <i class="fas fa-users text-cyan mb-1" style="font-size: 2rem;"></i>
+                        <h3>15,420</h3>
+                        <p class="text-muted">Total Members</p>
+                    </div>
+                    <div class="glass-card reveal active" style="text-align: center;">
+                        <i class="fas fa-tree text-green mb-1" style="font-size: 2rem;"></i>
+                        <h3>842k</h3>
+                        <p class="text-muted">Trees Grown</p>
+                    </div>
+                    <div class="glass-card reveal active" style="text-align: center;">
+                        <i class="fas fa-check-circle text-gold mb-1" style="font-size: 2rem;"></i>
+                        <h3>2.5M</h3>
+                        <p class="text-muted">Missions Done</p>
+                    </div>
+                </div>
+
+                <!-- Team Challenges -->
+                <div class="challenge-card reveal active">
+                    <h3 class="mb-1"><i class="fas fa-flag-checkered mr-1"></i> Active Team Battle</h3>
+                    <p class="text-muted mb-2">New York vs San Francisco: Who can reduce more CO2 this week?</p>
+                    <div style="height: 10px; background: rgba(255,255,255,0.1); border-radius: 5px; overflow: hidden; margin-bottom: 10px;">
+                        <div style="width: 65%; height: 100%; background: linear-gradient(90deg, var(--primary-green), var(--cyan-highlight));"></div>
+                    </div>
+                    <div class="flex-between" style="font-size: 0.8rem;">
+                        <span>NY: 65k Tons</span>
+                        <span>SF: 42k Tons</span>
+                    </div>
+                </div>
+
+                <!-- Community Feed -->
+                <div class="glass-card reveal active">
+                    <h3 class="mb-2">Live Community Feed</h3>
+                    
+                    <div class="feed-item">
+                        <div class="feed-header">
+                            <div class="feed-avatar">RP</div>
+                            <div>
+                                <strong>Rahul Prasad</strong>
+                                <p class="text-muted" style="font-size: 0.7rem;">2 minutes ago</p>
+                            </div>
+                        </div>
+                        <p>“Just planted 5 new digital trees in my forest after completing the weekly energy challenge! 🌳🚀”</p>
+                        <div class="mt-1">
+                            <button class="kudos-btn">🌟 Great Job</button>
+                            <button class="kudos-btn">🌱 Eco Hero</button>
+                        </div>
+                    </div>
+
+                    <div class="feed-item">
+                        <div class="feed-header">
+                            <div class="feed-avatar" style="background: linear-gradient(45deg, #00ff88, #00e5ff);">AS</div>
+                            <div>
+                                <strong>Anjali Sharma</strong>
+                                <p class="text-muted" style="font-size: 0.7rem;">15 minutes ago</p>
+                            </div>
+                        </div>
+                        <p>“Level up! Just reached <strong>Earth Guardian</strong> level. Consistency is key! 💚✨”</p>
+                        <div class="mt-1">
+                            <button class="kudos-btn">🔥 Amazing Streak</button>
+                            <button class="kudos-btn">💚 Inspiring</button>
+                        </div>
+                    </div>
+
+                    <div class="feed-item">
+                        <div class="feed-header">
+                            <div class="feed-avatar" style="background: linear-gradient(45deg, #ffd700, #ff8800);">PK</div>
+                            <div>
+                                <strong>Priya Kapoor</strong>
+                                <p class="text-muted" style="font-size: 0.7rem;">45 minutes ago</p>
+                            </div>
+                        </div>
+                        <p>“Won the <strong>Waste Sorting Game</strong> with a perfect score! ♻️🏆 Feel like a recycling pro now.”</p>
+                        <div class="mt-1">
+                            <button class="kudos-btn">🌟 Great Job</button>
+                            <button class="kudos-btn">🔥 Amazing Streak</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Leaderboard & Invite -->
+            <div style="display: flex; flex-direction: column; gap: 20px;">
+                <!-- Leaderboard -->
+                <div class="glass-card reveal active">
+                    <h3 class="mb-2">Global Leaderboard</h3>
+                    <div class="leaderboard-row">
+                        <span class="rank">#1</span>
+                        <div style="flex: 1; display: flex; align-items: center; gap: 10px;">
+                            <div class="feed-avatar" style="width: 30px; height: 30px; font-size: 0.7rem;">EK</div>
+                            <span>EcoKing</span>
+                        </div>
+                        <span class="text-green">9,840</span>
+                    </div>
+                    <div class="leaderboard-row">
+                        <span class="rank">#2</span>
+                        <div style="flex: 1; display: flex; align-items: center; gap: 10px;">
+                            <div class="feed-avatar" style="width: 30px; height: 30px; font-size: 0.7rem;">SL</div>
+                            <span>SolarLuna</span>
+                        </div>
+                        <span class="text-green">9,520</span>
+                    </div>
+                    <div class="leaderboard-row">
+                        <span class="rank">#3</span>
+                        <div style="flex: 1; display: flex; align-items: center; gap: 10px;">
+                            <div class="feed-avatar" style="width: 30px; height: 30px; font-size: 0.7rem;">GW</div>
+                            <span>GreenWitch</span>
+                        </div>
+                        <span class="text-green">9,100</span>
+                    </div>
+                    <div class="leaderboard-row" style="background: rgba(0, 255, 136, 0.05);">
+                        <span class="rank" style="color: var(--primary-green);">#45</span>
+                        <div style="flex: 1; display: flex; align-items: center; gap: 10px;">
+                            <div class="feed-avatar" style="width: 30px; height: 30px; font-size: 0.7rem;">JD</div>
+                            <span>You</span>
+                        </div>
+                        <span class="text-green">8,250</span>
+                    </div>
+                    <button class="btn btn-outline mt-2" style="width: 100%; padding: 8px;">View Full List</button>
+                </div>
+
+                <!-- Invite Friends -->
+                <div class="glass-card reveal active" style="background: linear-gradient(135deg, rgba(157, 78, 221, 0.2), transparent);">
+                    <h3 class="mb-1">Invite Friends</h3>
+                    <p class="text-muted mb-2" style="font-size: 0.9rem;">Get 500 Coins for every friend who joins CarbonNova.</p>
+                    <div class="input-group" style="margin-bottom: 10px;">
+                        <input type="text" value="carbonnova.ai/ref/john_doe" readonly style="background: rgba(0,0,0,0.5); font-size: 0.8rem;">
+                    </div>
+                    <button class="btn btn-primary" style="width: 100%; padding: 10px;">Copy Link</button>
+                </div>
+
+                <!-- Trending Topics -->
+                <div class="glass-card reveal active">
+                    <h3 class="mb-1">Trending Tags</h3>
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                        <span class="badge badge-green">#ZeroWaste</span>
+                        <span class="badge badge-purple">#SolarEnergy</span>
+                        <span class="badge badge-green">#EcoTips</span>
+                        <span class="badge badge-purple">#ClimateAction</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+        // Simple reaction animation
+        document.querySelectorAll('.kudos-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.style.transform = 'scale(1.2)';
+                this.style.borderColor = 'var(--primary-green)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 200);
+            });
+        });
+    </script>
+</body>
+</html>
